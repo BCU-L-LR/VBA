@@ -1,0 +1,108 @@
+' Constants
+Const SEARCH_COLUMN As String = "E"
+
+' Main procedure
+Sub ImprovedSearchAndPaste()
+  
+  ' Declare variables
+  Dim searchText As String
+  Dim lastRow As Long
+  Dim cell As Range
+  Dim matchFound As Boolean
+  Dim matches As Variant
+  Dim matchIndex As Long
+  
+  ' Get user input
+  searchText = InputBox("Enter search text:")
+  
+  If searchText = "" Then
+    MsgBox "No search text entered."
+    Exit Sub
+  End If
+
+  ' Find last row
+  lastRow = GetLastRow(SEARCH_COLUMN)
+
+  ' Search for matches
+  matches = SearchColumn(SEARCH_COLUMN, searchText, lastRow)
+  
+  ' Check if any matches
+  If IsEmpty(matches) Then
+    MsgBox "No matches found."
+  Else
+  
+    ' Get user selected cell
+    Set cell = GetUserCell()
+    
+    If Not cell Is Nothing Then
+    
+      ' Get user selection
+      matchIndex = GetUserSelection(matches)
+      
+      ' Paste match
+      PasteMatch cell, matches(matchIndex)
+      
+    End If
+  
+  End If
+  
+End Sub
+
+' Search column and return matches array
+Function SearchColumn(col As String, searchText As String, lastRow As Long) As Variant
+
+  ' Loop through column and search
+  Dim matches() As String
+  Dim i As Long
+  Dim matchIndex As Long
+  
+  For i = 1 To lastRow
+    If InStr(1, Cells(i, col).Value, searchText, vbTextCompare) > 0 Then
+      matchIndex = matchIndex + 1
+      ReDim Preserve matches(1 To matchIndex)
+      matches(matchIndex) = Cells(i, col).Value
+    End If
+  Next i
+  
+  SearchColumn = matches
+  
+End Function
+
+' Get last row with data
+Function GetLastRow(col As String) As Long
+
+  GetLastRow = Cells(Rows.Count, col).End(xlUp).Row
+  
+End Function
+
+' Get user selected cell
+Function GetUserCell() As Range
+
+  On Error Resume Next
+  Set GetUserCell = Application.InputBox("Select cell", Type:=8)
+  On Error GoTo 0
+  
+End Function
+
+' Get user match selection
+Function GetUserSelection(matches As Variant) As Long
+
+  ' Build matches string
+  Dim matchString As String
+  Dim i As Long
+  
+  For i = LBound(matches) To UBound(matches)
+    matchString = matchString & i & ". " & matches(i) & vbNewLine
+  Next i
+  
+  ' Get user input
+  GetUserSelection = InputBox("Select match:" & vbNewLine & matchString)
+  
+End Function
+
+' Paste match value into cell
+Sub PasteMatch(cell As Range, match As String)
+
+  cell.Value = match
+  
+End Sub
