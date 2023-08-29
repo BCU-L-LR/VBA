@@ -1,0 +1,18 @@
+Sub SumByCriteria()
+    Dim rngCriteria As Range
+    Dim rngValues As Range
+    Dim sumResult As Double
+    Dim cell As Range
+    
+    Set rngCriteria = Sheets("Sheet1").Range("H10:H2000")
+    Set rngValues = Sheets("Sheet1").Range("K10:K2000")
+    sumResult = 0
+    
+    For Each cell In rngCriteria
+        If cell.Value = Range("B2").Value Then
+            sumResult = sumResult + rngValues(cell.Row - rngCriteria.Row + 1, 1)
+        End If
+    Next cell
+    
+    Range("C2").Value = sumResult
+End Sub
