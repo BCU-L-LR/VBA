@@ -1,0 +1,74 @@
+Sub DataEntryMacro()
+    Dim ws As Worksheet
+    Dim entryRow As Long
+    
+    ' Set the worksheet where data will be populated
+    Set ws = ThisWorkbook.Sheets("Not On SITS")
+    
+    ' Find the next available row for data entry
+    entryRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+    
+    ' Prompt user to enter data
+    Dim inputDate As Date
+    Dim faculty1 As String
+    Dim courseCode As String
+    Dim faculty2 As String
+    Dim courseName As String
+    Dim courseStartDate As Date
+    Dim levelDescription As String
+    Dim numOfStudentsEnrolled As Long
+    Dim numOfStudentsSeen As Long
+    Dim librarian As String
+    Dim method As String
+    Dim duration As String
+    Dim typeOfTeaching As String
+    Dim integratedModule As String
+    Dim timely As String
+    Dim collaborative As String
+    Dim interactiveLearning As String
+    Dim actualTeaching As String
+    Dim otherComments As String
+    
+    inputDate = InputBox("Enter Date (DD/MM/YYYY):")
+    faculty1 = InputBox("Enter Faculty - ADM,HELS,CEBE or BLSS:")
+    courseCode = InputBox("Enter Course Code/Module Code:")
+    faculty2 = InputBox("Enter Faculty Name:")
+    courseName = InputBox("Enter Course Name:")
+    courseStartDate = InputBox("Enter Course Start Date (DD/MM/YYYY):")
+    levelDescription = InputBox("Enter Level Description:")
+    numOfStudentsEnrolled = InputBox("Enter Number of Students Enrolled (Approx):")
+    numOfStudentsSeen = InputBox("Enter Number of Students Seen:")
+    librarian = InputBox("Enter Librarian:")
+    method = InputBox("Enter Method:")
+    duration = InputBox("Enter Duration:")
+    typeOfTeaching = InputBox("Enter Type of Teaching:")
+    integratedModule = InputBox("Is teaching integrated in a module? (Yes/No):")
+    timely = InputBox("Is it timely? (Yes/No):")
+    collaborative = InputBox("Is it collaborative? (Yes/No):")
+    interactiveLearning = InputBox("Does it include interactive learning elements? (Yes/No):")
+    actualTeaching = InputBox("Does the actual teaching reflect what we could have delivered? (Yes/No):")
+    otherComments = InputBox("Any Other Comments?")
+    
+    ' Populate the worksheet with the entered data
+    ws.Cells(entryRow, 1).Value = inputDate
+    ws.Cells(entryRow, 2).Value = faculty1
+    ws.Cells(entryRow, 3).Value = courseCode
+    ws.Cells(entryRow, 4).Value = faculty2
+    ws.Cells(entryRow, 5).Value = courseName
+    ws.Cells(entryRow, 6).Value = courseStartDate
+    ws.Cells(entryRow, 7).Value = levelDescription
+    ws.Cells(entryRow, 8).Value = numOfStudentsEnrolled
+    ws.Cells(entryRow, 9).Value = numOfStudentsSeen
+    ws.Cells(entryRow, 10).Value = librarian
+    ws.Cells(entryRow, 11).Value = method
+    ws.Cells(entryRow, 12).Value = duration
+    ws.Cells(entryRow, 13).Value = typeOfTeaching
+    ws.Cells(entryRow, 14).Value = integratedModule
+    ws.Cells(entryRow, 15).Value = timely
+    ws.Cells(entryRow, 16).Value = collaborative
+    ws.Cells(entryRow, 17).Value = interactiveLearning
+    ws.Cells(entryRow, 18).Value = actualTeaching
+    ws.Cells(entryRow, 19).Value = otherComments
+    
+    MsgBox "Data entered successfully!", vbInformation
+End Sub
